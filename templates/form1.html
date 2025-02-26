@@ -1,0 +1,23 @@
+<h2>Add Course</h2>
+    <form action="{{ url_for('add_course') }}" method="post">
+        <input type="text" name="name" placeholder="Course Name" required>
+        <button type="submit">Add Course</button>
+    </form>
+
+    <!-- Enroll Student in Course Form -->
+    <h2>Enroll Student in Course</h2>
+    <form action="{{ url_for('enroll_student') }}" method="post">
+        <select name="student_id" required>
+            <option value="" disabled selected>Select Student</option>
+            {% for student in students %}
+                <option value="{{ student.id }}">{{ student.name }}</option>
+            {% endfor %}
+        </select>
+        <select name="course_id" required>
+            <option value="" disabled selected>Select Course</option>
+            {% for course in courses %}
+                <option value="{{ course.id }}">{{ course.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Enroll</button>
+    </form>

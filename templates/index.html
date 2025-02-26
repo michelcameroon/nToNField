@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tb1 Tb2 Enrollment</title>
+</head>
+<body>
+    <h1>Tb1s and Tb2s</h1>
+
+    <!-- Add Student Form -->
+    <h2>Add Tb1</h2>
+    <form action="{{ url_for('add_tb1') }}" method="post">
+
+        <table border="1">
+
+            <tr>
+
+              <div class="mb-3">
+              {% for tb1fieldNamesNoId in tb1fieldNamesNoIds %}
+
+              <td>
+
+                  <label for="{{ tb1fieldNamesNoId }}" class="form-label">{{ tb1fieldNamesNoId.capitalize() }}</label>
+              </td>
+              <td>
+                  <input type="text" class="form-control" id="{{ tb1fieldNamesNoId }}" name="{{ tb1fieldNamesNoId }}" required>
+
+
+              </td>
+              {% endfor %}
+<!--      
+        <td>
+                  <button type="submit">Create</button>
+
+              </td>
+-->            </tr>
+       </table>
+
+
+        <button type="submit">Add Tb1</button>
+    </form>
+
+    <!-- Add Course Form -->
+
+    <h2>Add Tb2</h2>
+    <form action="{{ url_for('add_tb2') }}" method="post">
+
+
+        <table border="1">
+
+            <tr>
+
+              <div class="mb-3">
+              {% for tb2fieldNamesNoId in tb2fieldNamesNoIds %}
+
+              <td>
+                  <label for="{{ tb2fieldNamesNoId }}" class="form-label">{{ tb2fieldNamesNoId.capitalize() }}</label>
+
+                  
+              </td>
+              <td>
+                  
+                  <input type="text" class="form-control" id="{{ tb2fieldNamesNoId }}" name="{{ tb2fieldNamesNoId }}" required>
+
+
+              </td>
+              {% endfor %}
+<!--      
+        <td>
+                  <button type="submit">Create</button>
+
+              </td>
+-->            </tr>
+       </table>
+
+
+
+
+
+        <input type="text" name="name" placeholder="Tb2 Name" required>
+        <button type="submit">Add Tb2</button>
+    </form>
+
+    <!-- Enroll Student in Course Form -->
+    <h2>Enroll Tb1 in Tb2</h2>
+    <form action="{{ url_for('enroll_tb1') }}" method="post">
+        <select name="tb1_id" required>
+            <option value="" disabled selected>Select Tb1</option>
+            {% for tb1 in tb1s %}
+                <option value="{{ tb1.id }}">{{ tb1.name }}</option>
+            {% endfor %}
+        </select>
+        <select name="tb2_id" required>
+            <option value="" disabled selected>Select Tb2</option>
+            {% for tb2 in tb2s %}
+                <option value="{{ tb2.id }}">{{ tb2.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Enroll</button>
+    </form>
+
+    <!-- Display Students and Their Courses -->
+    <h2>Tb1s and theis Tb2s</h2>
+    <ul>
+        {% for tb1 in tb1s %}
+            <li>
+                {{ tb1.name }}
+                <ul>
+                    {% for tb2 in tb1.tb2s %}
+                        <li>{{ tb2.name }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Display Courses and Their Students -->
+    <h2>Tb2s and Their Tb1s</h2>
+    <ul>
+        {% for tb2 in tb2s %}
+            <li>
+                {{ tb2.name }}
+                <ul>
+                    {% for tb1 in tb2.tb1s %}
+                        <li>{{ tb1.name }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
